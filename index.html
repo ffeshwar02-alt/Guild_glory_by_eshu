@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FFGlory Panel — Command Center</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   SHADOW GAMER GLORY — LUXURY COMMAND CENTER
+   Deep black + royal gold · glassmorphism · premium typography
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+    /* Core palette */
+    --lux-black:      #0A0A0B;
+    --lux-obsidian:   #101013;
+    --lux-charcoal:   #16161A;
+    --lux-carbon:     #1C1C22;
+    --lux-slate:      #24242C;
+
+    /* Royal gold family */
+    --lux-gold:       #D4AF37;
+    --lux-gold-bright:#F0CC5E;
+    --lux-gold-deep:  #A67C1F;
+    --lux-champagne:  #E8D5A8;
+    --lux-cream:      #F5EDD8;
+    --lux-pearl:      #FFF9EC;
+
+    /* Text */
+    --lux-text:       #F0F0F2;
+    --lux-text-dim:   #A8A8B0;
+    --lux-text-mute:  #6E6E78;
+
+    /* Borders */
+    --lux-border:      #26262E;
+    --lux-border-soft: #1F1F26;
+    --lux-border-gold: rgba(212, 175, 55, 0.28);
+
+    /* Status */
+    --lux-green:      #4ADE80;
+    --lux-amber:      #FBBF24;
+    --lux-red:        #F87171;
+
+    /* Effects */
+    --lux-glow-gold:  0 0 24px rgba(212, 175, 55, 0.28);
+    --lux-glow-soft:  0 0 32px rgba(212, 175, 55, 0.12);
+    --lux-shadow-lg:  0 24px 64px rgba(0, 0, 0, 0.72);
+
+    /* Motion */
+    --lux-ease:       cubic-bezier(0.22, 1, 0.36, 1);
+    --lux-ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--lux-black);
+    background-image:
+        radial-gradient(ellipse 1200px 600px at 50% -10%, rgba(212, 175, 55, 0.06), transparent 60%),
+        radial-gradient(ellipse 800px 400px at 100% 100%, rgba(212, 175, 55, 0.04), transparent 60%);
+    color: var(--lux-text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    padding-bottom: 90px;
+}
+
+/* Subtle noise grain overlay */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 1;
+}
+
+h1,h2,h3,h4,h5 {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TOP NAV — Reference Matched Top Bar
+   ═══════════════════════════════════════════════════════════════ */
+
+.topnav {
+    height: 68px;
+    background: rgba(10, 10, 11, 0.88);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--lux-border-soft);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+.topnav::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lux-border-gold), transparent);
+    opacity: 0.7;
+}
+.topnav-inner {
+    height: 100%;
+    max-width: 1520px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.topnav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    transition: opacity .2s;
+}
+.topnav-brand:hover { opacity: 0.88; }
+.topnav-mark {
+    width: 36px; height: 36px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    color: var(--lux-black);
+    background: linear-gradient(135deg, var(--lux-gold-bright), var(--lux-gold), var(--lux-gold-deep));
+    box-shadow:
+        0 0 0 1px rgba(240, 204, 94, 0.35),
+        0 6px 20px rgba(212, 175, 55, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    flex-shrink: 0;
+    position: relative;
+}
+.topnav-mark::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18), transparent 40%);
+    pointer-events: none;
+}
+.topnav-mark svg { width: 18px; height: 18px; position: relative; z-index: 1; }
+.topnav-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--lux-text);
+    letter-spacing: 0.01em;
+    background: linear-gradient(135deg, var(--lux-pearl), var(--lux-champagne));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.topnav-actions { display: flex; align-items: center; gap: 8px; }
+
+/* Credit Badge Box matching reference photo */
+.credit-badge-box {
+    display: flex;
+    align-items: center;
+    background: var(--lux-obsidian);
+    border: 1px solid var(--lux-border);
+    border-radius: 14px;
+    padding: 3px 3px 3px 12px;
+    gap: 8px;
+}
+.credit-info-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--lux-text-dim);
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    text-align: left;
+}
+.credit-info-text strong {
+    font-size: 13px;
+    color: var(--lux-gold-bright);
+}
+.credit-add-btn {
+    width: 28px; height: 28px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--lux-gold-bright), var(--lux-gold));
+    border: none;
+    color: var(--lux-black);
+    font-weight: 800;
+    cursor: pointer;
+    display: grid; place-items: center;
+    box-shadow: 0 2px 8px rgba(212,175,55,0.3);
+}
+
+.icon-pill-btn {
+    width: 36px; height: 36px;
+    border-radius: 12px;
+    background: var(--lux-obsidian);
+    border: 1px solid var(--lux-border);
+    color: var(--lux-text);
+    display: grid; place-items: center;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    transition: border-color 0.2s;
+}
+.icon-pill-btn:hover { border-color: var(--lux-border-gold); }
+.icon-pill-btn svg { width: 16px; height: 16px; }
+.badge-dot {
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 7px; height: 7px;
+    background: var(--lux-amber);
+    border-radius: 50%;
+}
+.badge-pill-count {
+    position: absolute;
+    top: -4px; right: -4px;
+    background: var(--lux-gold);
+    color: var(--lux-black);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 99px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOTTOM NAVIGATION BAR (Reference Matched)
+   ═══════════════════════════════════════════════════════════════ */
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 72px;
+    background: rgba(16, 16, 19, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--lux-border);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.bnav-item {
+    background: transparent;
+    border: none;
+    color: var(--lux-text-mute);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    transition: color 0.2s;
+    text-decoration: none;
+}
+.bnav-item svg { width: 20px; height: 20px; stroke-width: 1.8px; }
+.bnav-item.active {
+    color: var(--lux-gold-bright);
+}
+.bnav-item.active svg {
+    stroke: var(--lux-gold-bright);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════════════════════════ */
+
+.page { max-width: 1520px; margin: 0 auto; padding: 24px 16px 80px; position: relative; z-index: 2; display: none; }
+.page.active-view { display: block; }
+
+/* ═══════════════════════════════════════════════════════════════
+   STATS ROW — luxury tiles with gold accents
+   ═══════════════════════════════════════════════════════════════ */
+
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin-bottom: 36px;
+}
+.stat-tile {
+    background: linear-gradient(155deg, var(--lux-charcoal), var(--lux-obsidian));
+    border: 1px solid var(--lux-border);
+    border-radius: 18px;
+    padding: 22px 22px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .35s var(--lux-ease), transform .35s var(--lux-ease), box-shadow .35s var(--lux-ease);
+}
+.stat-tile::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 24px; right: 24px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lux-border-gold), transparent);
+    opacity: 0.8;
+}
+.stat-tile:hover {
+    border-color: var(--lux-border-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(0,0,0,.4), var(--lux-glow-soft);
+}
+.stat-tile-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--lux-text-mute);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.stat-tile-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--lux-text);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+}
+.stat-tile-value.cream {
+    background: linear-gradient(135deg, var(--lux-gold-bright), var(--lux-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.stat-tile-sub {
+    font-size: 11px;
+    color: var(--lux-text-mute);
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.stat-tile-accent {
+    position: absolute;
+    bottom: -30px; right: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.12), transparent 70%);
+    pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION HEADER
+   ═══════════════════════════════════════════════════════════════ */
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--lux-text);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: 0.01em;
+}
+.section-count {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--lux-gold-bright);
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid var(--lux-border-gold);
+    font-family: 'JetBrains Mono', monospace;
+}
+.section-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+/* ═══════════════════════════════════════════════════════════════
+   FILTER TABS
+   ═══════════════════════════════════════════════════════════════ */
+
+.filter-tabs {
+    display: flex;
+    gap: 2px;
+    padding: 4px;
+    background: var(--lux-obsidian);
+    border: 1px solid var(--lux-border);
+    border-radius: 12px;
+}
+.ftab {
+    padding: 8px 16px;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--lux-text-mute);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color .2s, background .2s;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+}
+.ftab:hover { color: var(--lux-text); background: rgba(255,255,255,.03); }
+.ftab.active {
+    color: var(--lux-black);
+    background: linear-gradient(135deg, var(--lux-gold-bright), var(--lux-gold));
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SEARCH
+   ═══════════════════════════════════════════════════════════════ */
+
+.search-wrap { position: relative; }
+.search-wrap svg {
+    position: absolute;
+    left: 14px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--lux-text-mute);
+    width: 14px; height: 14px;
+    pointer-events: none;
+}
+.search-input {
+    width: 240px;
+    height: 38px;
+    background: var(--lux-obsidian);
+    border: 1px solid var(--lux-border);
+    border-radius: 11px;
+    padding: 0 14px 0 38px;
+    color: var(--lux-text);
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color .25s, background .25s, box-shadow .25s;
+}
+.search-input:focus {
+    border-color: var(--lux-border-gold);
+    background: var(--lux-charcoal);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+.search-input::placeholder { color: var(--lux-text-mute); }
+
+/* ═══════════════════════════════════════════════════════════════
+   SQUAD GRID
+   ═══════════════════════════════════════════════════════════════ */
+
+.squads-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SQUAD CARD — luxury dark with gold hairline
+   ═══════════════════════════════════════════════════════════════ */
+
+.squad-card {
+    background: linear-gradient(160deg, var(--lux-charcoal), var(--lux-obsidian));
+    border: 1px solid var(--lux-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: border-color .35s var(--lux-ease), transform .35s var(--lux-ease), box-shadow .35s var(--lux-ease);
+    position: relative;
+}
+.squad-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lux-gold), transparent);
+    opacity: 0.55;
+    transition: opacity .35s;
+    z-index: 2;
+}
+.squad-card:hover {
+    border-color: var(--lux-border-gold);
+    transform: translateY(-3px);
+    box-shadow: 0 24px 60px rgba(0,0,0,.55), var(--lux-glow-soft);
+}
+.squad-card:hover::before { opacity: 1; }
+
+.squad-card-head {
+    padding: 22px 22px 18px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    position: relative;
+}
+.squad-card-info { flex: 1; min-width: 0; }
+.squad-clan-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--lux-text);
+    letter-spacing: 0.005em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.clan-level-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 7px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--lux-black);
+    background: linear-gradient(135deg, var(--lux-gold-bright), var(--lux-gold));
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+.squad-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.squad-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--lux-text-dim);
+    font-family: 'JetBrains Mono', monospace;
+}
+.squad-meta-item svg { width: 11px; height: 11px; color: var(--lux-text-mute); }
+.squad-status { flex-shrink: 0; }
+
+/* Status pills — refined */
+.spill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+}
+.spill-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 8px currentColor;
+}
+.spill.in-match  { color: var(--lux-green); background: rgba(74,222,128,.08); border: 1px solid rgba(74,222,128,.28); }
+.spill.ready     { color: var(--lux-gold-bright); background: rgba(212,175,55,.08); border: 1px solid var(--lux-border-gold); }
+.spill.paused    { color: var(--lux-amber); background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.28); }
+.spill.no-bots   { color: var(--lux-red); background: rgba(248,113,113,.08); border: 1px solid rgba(248,113,113,.28); }
+
+/* Glory block — luxury split */
+.glory-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--lux-border-soft);
+    border-top: 1px solid var(--lux-border-soft);
+    border-bottom: 1px solid var(--lux-border-soft);
+}
+.glory-cell {
+    background: var(--lux-obsidian);
+    padding: 18px 22px;
+    position: relative;
+}
+.glory-cell:first-child::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 22%; bottom: 22%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--lux-border-gold), transparent);
+    opacity: 0.5;
+}
+.glory-cell-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--lux-text-mute);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    font-family: 'JetBrains Mono', monospace;
+}
+.glory-cell-label svg { width: 11px; height: 11px; color: var(--lux-gold); }
+.glory-cell-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--lux-text);
+    line-height: 1;
+    letter-spacing: -0.01em;
+}
+.glory-gain {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+}
+.glory-gain.pos { color: var(--lux-green); }
+.glory-gain.neg { color: var(--lux-red); }
+.glory-gain.zero { color: var(--lux-text-mute); }
+.glory-since {
+    font-size: 10px;
+    color: var(--lux-text-mute);
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0.8;
+}
+
+/* Card stats row */
+.card-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--lux-border-soft);
+}
+.card-stat-cell {
+    background: var(--lux-obsidian);
+    padding: 14px 12px;
+    text-align: center;
+    transition: background .2s;
+}
+.card-stat-cell:hover { background: var(--lux-charcoal); }
+.card-stat-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--lux-text);
+    line-height: 1;
+    margin-bottom: 4px;
+}
+.card-stat-lbl {
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--lux-text-mute);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Card footer */
+.card-foot {
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.card-foot-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+.card-foot-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: var(--lux-text-mute);
+    font-family: 'JetBrains Mono', monospace;
+}
+.card-foot-item svg { width: 11px; height: 11px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   BUTTONS — premium feel
+   ═══════════════════════════════════════════════════════════════ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 11px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all .22s var(--lux-ease);
+    text-decoration: none;
+    border: none;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+}
+.btn svg { width: 14px; height: 14px; }
+.btn-ghost {
+    color: var(--lux-text-dim);
+    background: transparent;
+    border: 1px solid var(--lux-border);
+}
+.btn-ghost:hover {
+    color: var(--lux-text);
+    background: rgba(255,255,255,.04);
+    border-color: var(--lux-border-gold);
+}
+.btn-cream {
+    color: var(--lux-black);
+    background: linear-gradient(135deg, var(--lux-gold-bright), var(--lux-gold));
+    box-shadow:
+        0 0 0 1px rgba(240, 204, 94, 0.35),
+        0 4px 16px rgba(212, 175, 55, 0.28);
+    font-weight: 700;
+}
+.btn-cream:hover {
+    filter: brightness(1.06);
+    box-shadow:
+        0 0 0 1px rgba(240, 204, 94, 0.5),
+        0 8px 24px rgba(212, 175, 55, 0.4);
+    transform: translateY(-1px);
+}
+.btn-cream:active { transform: translateY(0); }
+.btn-danger-soft {
+    color: var(--lux-red);
+    background: rgba(248,113,113,.06);
+    border: 1px solid rgba(248,113,113,.24);
+}
+.btn-danger-soft:hover { background: rgba(248,113,113,.12); border-color: rgba(248,113,113,.4); }
+.btn-sm { height: 32px; padding: 0 12px; font-size: 11px; border-radius: 9px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   EMPTY STATE
+   ═══════════════════════════════════════════════════════════════ */
+
+.empty-state {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 72px 24px;
+    text-align: center;
+}
+.empty-state-icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: grid; place-items: center;
+    background: linear-gradient(155deg, var(--lux-charcoal), var(--lux-obsidian));
+    border: 1px solid var(--lux-border);
+    color: var(--lux-gold);
+    margin-bottom: 4px;
+    box-shadow: var(--lux-glow-soft);
+}
+.empty-state-icon svg { width: 24px; height: 24px; }
+.empty-state p {
+    color: var(--lux-text-mute);
+    font-size: 13px;
+    max-width: 280px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MODAL — luxury drawer
+   ═══════════════════════════════════════════════════════════════ */
+
+.modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    background: rgba(0,0,0,0);
+    backdrop-filter: blur(0px);
+    visibility: hidden;
+    transition: background .3s ease, backdrop-filter .3s ease, visibility 0s .3s;
+    pointer-events: none;
+}
+.modal-overlay.open {
+    background: rgba(0,0,0,.78);
+    backdrop-filter: blur(10px);
+    visibility: visible;
+    transition: background .3s ease, backdrop-filter .3s ease;
+    pointer-events: auto;
+}
+.modal-box {
+    background: linear-gradient(160deg, var(--lux-charcoal), var(--lux-obsidian));
+    border: 1px solid var(--lux-border);
+    border-radius: 22px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 88vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--lux-shadow-lg), 0 0 0 1px rgba(212, 175, 55, 0.08);
+    opacity: 0;
+    transform: translateY(24px) scale(.97);
+    transition: opacity .32s var(--lux-ease-out), transform .32s var(--lux-ease-out);
+    position: relative;
+}
+.modal-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lux-gold), transparent);
+    opacity: 0.8;
+}
+.modal-overlay.open .modal-box {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+@media (max-width: 640px) {
+    .modal-overlay { align-items: flex-end; padding: 0; }
+    .modal-box {
+        border-radius: 22px 22px 0 0;
+        max-width: 100%;
+        max-height: 92vh;
+        transform: translateY(48px);
+    }
+    .modal-overlay.open .modal-box { transform: translateY(0); }
+}
+.modal-header {
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--lux-border-soft);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-shrink: 0;
+}
+.modal-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--lux-text);
+}
+.modal-header h3 small {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--lux-text-mute);
+    margin-top: 4px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.02em;
+}
+.modal-close {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--lux-border);
+    background: transparent;
+    color: var(--lux-text-mute);
+    cursor: pointer;
+    display: grid; place-items: center;
+    transition: all .2s;
+    flex-shrink: 0;
+}
+.modal-close:hover {
+    color: var(--lux-red);
+    background: rgba(248,113,113,.08);
+    border-color: rgba(248,113,113,.3);
+}
+.modal-close svg { width: 17px; height: 17px; }
+.modal-body {
+    padding: 24px 28px;
+    overflow-y: auto;
+    flex: 1;
+}
+.modal-body::-webkit-scrollbar { width: 6px; }
+.modal-body::-webkit-scrollbar-thumb { background: var(--lux-border); border-radius: 4px; }
+.modal-body::-webkit-scrollbar-thumb:hover { background: var(--lux-border-gold); }
+
+/* Bot details in modal */
+.bot-list { display: flex; flex-direction: column; gap: 10px; }
+.bot-row {
+    background: var(--lux-obsidian);
+    border: 1px solid var(--lux-border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all .25s var(--lux-ease);
+}
+.bot-row:hover {
+    border-color: var(--lux-border-gold);
+    background: var(--lux-charcoal);
+    transform: translateX(2px);
+}
+.bot-avatar {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, rgba(212,175,55,.14), rgba(212,175,55,.04));
+    border: 1px solid var(--lux-border-gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--lux-gold-bright);
+    flex-shrink: 0;
+    text-shadow: 0 0 16px rgba(212,175,55,.35);
+}
+.bot-info { flex: 1; min-width: 0; }
+.bot-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--lux-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.bot-meta-row {
+    display: flex;
+    gap: 14px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+.bot-meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--lux-text-dim);
+    font-family: 'JetBrains Mono', monospace;
+}
+.bot-meta-tag svg { width: 11px; height: 11px; }
+.bot-status-tag {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 7px;
+    font-size: 10px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+.bot-status-tag.in-match  { color: var(--lux-green); background: rgba(74,222,128,.08); border: 1px solid rgba(74,222,128,.22); }
+.bot-status-tag.online    { color: var(--lux-gold-bright); background: rgba(212,175,55,.08); border: 1px solid var(--lux-border-gold); }
+.bot-status-tag.paused    { color: var(--lux-amber); background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.22); }
+.bot-status-tag.offline   { color: var(--lux-red); background: rgba(248,113,113,.08); border: 1px solid rgba(248,113,113,.22); }
+
+/* modal glory summary */
+.modal-clan-glory {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+.mgc-cell {
+    background: linear-gradient(155deg, var(--lux-charcoal), var(--lux-obsidian));
+    border: 1px solid var(--lux-border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+}
+.mgc-cell::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 20%; right: 20%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lux-gold), transparent);
+    opacity: 0.6;
+}
+.mgc-label {
+    font-size: 10px;
+    color: var(--lux-text-mute);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    margin-bottom: 8px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.mgc-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--lux-text);
+    letter-spacing: -0.01em;
+}
+.mgc-gain {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 6px;
+}
+.mgc-gain.pos { color: var(--lux-green); }
+.mgc-gain.zero { color: var(--lux-text-mute); }
+
+/* Modal for new squad */
+.field-block { margin-bottom: 20px; }
+.field-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--lux-text-dim);
+    margin-bottom: 9px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    font-family: 'JetBrains Mono', monospace;
+}
+.field-input, .field-select {
+    width: 100%;
+    height: 46px;
+    background: var(--lux-obsidian);
+    border: 1px solid var(--lux-border);
+    border-radius: 11px;
+    padding: 0 16px;
+    color: var(--lux-text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: all .25s var(--lux-ease);
+    appearance: none;
+}
+.field-input:focus, .field-select:focus {
+    border-color: var(--lux-border-gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    background: var(--lux-charcoal);
+}
+.field-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23D4AF37' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 40px;
+    cursor: pointer;
+}
+.field-select option { background: var(--lux-charcoal); color: var(--lux-text); }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   TOAST
+   ═══════════════════════════════════════════════════════════════ */
+
+#toast-stack {
+    position: fixed;
+    right: 24px; bottom: 90px;
+    z-index: 999;
+    display: flex; flex-direction: column-reverse; gap: 10px;
+    width: min(380px, calc(100vw - 32px));
+    pointer-events: none;
+}
+.toast-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: linear-gradient(155deg, var(--lux-charcoal), var(--lux-obsidian));
+    border: 1px solid var(--lux-border);
+    box-shadow: var(--lux-shadow-lg);
+    font-size: 13px;
+    color: var(--lux-text);
+    pointer-events: auto;
+    animation: toastIn .32s var(--lux-ease-out);
+    position: relative;
+    overflow: hidden;
+}
+.toast-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+}
+.toast-item.success::before { background: linear-gradient(180deg, var(--lux-green), transparent); }
+.toast-item.error::before   { background: linear-gradient(180deg, var(--lux-red), transparent); }
+.toast-item.info::before    { background: linear-gradient(180deg, var(--lux-gold), transparent); }
+@keyframes toastIn {
+    from { opacity: 0; transform: translateY(12px) scale(.96); }
+    to   { opacity: 1; transform: none; }
+}
+.toast-ico { width: 24px; height: 24px; flex-shrink: 0; display: grid; place-items: center; }
+.toast-ico svg { width: 16px; height: 16px; }
+.toast-item.success .toast-ico { color: var(--lux-green); }
+.toast-item.error .toast-ico   { color: var(--lux-red); }
+.toast-item.info .toast-ico    { color: var(--lux-gold); }
+
+/* ═══════════════════════════════════════════════════════════════
+   UPTIME / SPINNER
+   ═══════════════════════════════════════════════════════════════ */
+
+#uptime-ticker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--lux-gold-bright), var(--lux-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin .7s linear infinite; }
+.refresh-icon { transition: transform .3s ease; }
+.refreshing .refresh-icon { animation: spin .6s linear infinite; }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1200px) {
+    .stats-row { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 720px) {
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .squads-grid { grid-template-columns: 1fr; }
+    .page { padding: 20px 16px 80px; }
+    .topnav-title { display: none; }
+    .hide-mobile { display: none; }
+    .search-input { width: 180px; }
+    .section-title { font-size: 20px; }
+}
+@media (max-width: 480px) {
+    .field-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr; }
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--lux-obsidian); }
+::-webkit-scrollbar-thumb { background: var(--lux-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--lux-border-gold); }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV (Reference Matched with WhatsApp, Notifications, Credits, & Secret Admin Entry) -->
+<nav class="topnav">
+    <div class="topnav-inner">
+        <a class="topnav-brand" href="#" onclick="switchTab('home')">
+            <div class="topnav-mark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+            </div>
+            <span class="topnav-title">FFGlory Panel</span>
+        </a>
+
+        <div class="topnav-actions">
+            <!-- Credits Badge Box -->
+            <div class="credit-badge-box">
+                <div class="credit-info-text">
+                    <span>Basic</span>
+                    <strong><span id="user-credits">0</span> credits</strong>
+                </div>
+                <button class="credit-add-btn" onclick="switchTab('transactions')" title="Add Credits">+</button>
+            </div>
+
+            <!-- WhatsApp Support Link -->
+            <a href="https://wa.me/918123561579" target="_blank" class="icon-pill-btn" title="WhatsApp Support">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </a>
+
+            <!-- Notifications Icon -->
+            <button class="icon-pill-btn" onclick="toast('No new notifications', 'info')" title="Notifications">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <span class="badge-pill-count">1</span>
+            </button>
+
+            <!-- User Initial Avatar / Secret Admin Access Trigger -->
+            <button class="icon-pill-btn" onclick="openAdminAuthModal()" title="Admin Control Center" style="font-family:'Playfair Display'; font-weight:700; color:var(--lux-gold-bright);">
+                E
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- 5 BOTTOM NAVIGATION TABS (Reference Matched) -->
+<div class="bottom-nav">
+    <button class="bnav-item active" id="tab-home" onclick="switchTab('home')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+    </button>
+    <button class="bnav-item" id="tab-transactions" onclick="switchTab('transactions')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span>Transactions</span>
+    </button>
+    <button class="bnav-item" id="tab-coupons" onclick="switchTab('coupons')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        <span>Coupons</span>
+    </button>
+    <button class="bnav-item" id="tab-history" onclick="switchTab('history')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>History</span>
+    </button>
+    <button class="bnav-item" id="tab-account" onclick="switchTab('account')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Account</span>
+    </button>
+</div>
+
+<!-- PAGE 1: HOME (Dashboard, Stats & Squads) -->
+<div id="view-home" class="page active-view">
+
+    <!-- STATS -->
+    <div class="stats-row">
+        <div class="stat-tile">
+            <div class="stat-tile-label">Active Squads</div>
+            <div class="stat-tile-value" id="st-squads">0</div>
+            <div class="stat-tile-sub" id="st-bots">0 bots running</div>
+            <div class="stat-tile-accent"></div>
+        </div>
+        <div class="stat-tile">
+            <div class="stat-tile-label">Matches Started</div>
+            <div class="stat-tile-value" id="st-started">0</div>
+            <div class="stat-tile-sub" id="st-per-hour">0 / hour</div>
+            <div class="stat-tile-accent"></div>
+        </div>
+        <div class="stat-tile">
+            <div class="stat-tile-label">Matches Done</div>
+            <div class="stat-tile-value" id="st-done">0</div>
+            <div class="stat-tile-sub" id="st-active">0 active now</div>
+            <div class="stat-tile-accent"></div>
+        </div>
+        <div class="stat-tile">
+            <div class="stat-tile-label">Total EXP</div>
+            <div class="stat-tile-value cream" id="st-exp">+0</div>
+            <div class="stat-tile-sub" id="st-exp-hr">0 EXP / hr</div>
+            <div class="stat-tile-accent"></div>
+        </div>
+        <div class="stat-tile">
+            <div class="stat-tile-label">Uptime</div>
+            <div id="uptime-ticker">00:00:00</div>
+            <div class="stat-tile-sub">100% operational</div>
+            <div class="stat-tile-accent"></div>
+        </div>
+    </div>
+
+    <!-- SQUADS SECTION HEADER -->
+    <div class="section-header">
+        <div class="section-title">
+            Squads
+            <span class="section-count" id="badge-count">0</span>
+        </div>
+        <div class="section-actions">
+            <div class="search-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input class="search-input" id="squad-search" type="text" placeholder="Clan name or ID…" oninput="filterSquads()">
+            </div>
+            <div class="filter-tabs">
+                <button class="ftab active" onclick="setFilter('all',this)">All</button>
+                <button class="ftab" onclick="setFilter('in_match',this)">In Match</button>
+                <button class="ftab" onclick="setFilter('ready',this)">Ready</button>
+                <button class="ftab" onclick="setFilter('paused',this)">Paused</button>
+            </div>
+            <button class="btn btn-cream btn-sm" onclick="openSquadModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                Launch New Group
+            </button>
+        </div>
+    </div>
+
+    <div class="squads-grid" id="squads-grid">
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <p>Loading squads…</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- PAGE 2: TRANSACTIONS -->
+<div id="view-transactions" class="page">
+    <div class="section-header">
+        <div class="section-title">Transactions & Buy Credits</div>
+    </div>
+    <div style="background:var(--lux-obsidian); border:1px solid var(--lux-border); border-radius:18px; padding:24px; max-width:600px;">
+        <h3 style="font-size:16px; color:var(--lux-gold-bright); margin-bottom:12px;">Instant WhatsApp Top-up</h3>
+        <p style="color:var(--lux-text-mute); font-size:13px; margin-bottom:20px;">Top up your credits securely via WhatsApp to launch and run your Free Fire glory bot squads instantly.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--lux-charcoal); padding:16px; border-radius:12px;">
+            <div>
+                <strong style="color:var(--lux-text);">Basic Credit Package</strong>
+                <div style="font-size:11px; color:var(--lux-text-mute); font-family:'JetBrains Mono',monospace;">1 Basic Credit • $1.00</div>
+            </div>
+            <a href="https://wa.me/918123561579?text=Hello,%20I%20want%20to%20buy%20credits%20for%20FFGlory%20Panel" target="_blank" class="btn btn-cream">Buy via WhatsApp</a>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 3: COUPONS -->
+<div id="view-coupons" class="page">
+    <div class="section-header">
+        <div class="section-title">Coupons & Redeem Codes</div>
+    </div>
+    <div style="background:var(--lux-obsidian); border:1px solid var(--lux-border); border-radius:18px; padding:24px; max-width:600px;">
+        <form onsubmit="submitRedeemCode(event)">
+            <div class="field-block">
+                <label class="field-label">Coupon Code</label>
+                <input class="field-input" id="redeem-input-code" type="text" placeholder="Enter coupon code (e.g. eshu)" required>
+            </div>
+            <button type="submit" class="btn btn-cream" style="width:100%; margin-top:8px;">Claim Credits</button>
+        </form>
+    </div>
+</div>
+
+<!-- PAGE 4: HISTORY -->
+<div id="view-history" class="page">
+    <div class="section-header">
+        <div class="section-title">Live Terminal & Activity History</div>
+    </div>
+    <div style="background:var(--lux-obsidian); border:1px solid var(--lux-border); border-radius:18px; padding:24px;">
+        <div id="live-logs-container" style="background:#050507; border:1px solid var(--lux-border); border-radius:12px; padding:16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--lux-green); height:380px; overflow-y:auto; line-height:1.7;">
+            [04:15:00] [SYSTEM] FFGlory Command Center initialized.<br>
+            [04:15:02] [BOT-MANAGER] Node synchronization complete.<br>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 5: ACCOUNT -->
+<div id="view-account" class="page">
+    <div class="section-header">
+        <div class="section-title">User Account</div>
+    </div>
+    <div style="background:var(--lux-obsidian); border:1px solid var(--lux-border); border-radius:18px; padding:24px; max-width:600px;">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+            <div style="width:50px; height:50px; border-radius:14px; background:linear-gradient(135deg,var(--lux-gold-bright),var(--lux-gold)); display:grid; place-items:center; color:var(--lux-black); font-weight:700; font-size:20px;">E</div>
+            <div>
+                <strong style="font-size:16px; color:var(--lux-text);">ESHU CODEX User</strong>
+                <div style="font-size:12px; color:var(--lux-text-mute); font-family:'JetBrains Mono',monospace;">Active Credits: <span id="account-credits-display" style="color:var(--lux-gold-bright);">0</span></div>
+            </div>
+        </div>
+        <a href="https://wa.me/918123561579" target="_blank" class="btn btn-ghost" style="width:100%; justify-content:center;">Contact Support (WhatsApp)</a>
+    </div>
+</div>
+
+<!-- TOAST STACK -->
+<div id="toast-stack"></div>
+
+<!-- ADMIN AUTH MODAL (Securely accessed behind top profile/admin icon) -->
+<div class="modal-overlay" id="admin-auth-modal">
+    <div class="modal-box" style="max-width:380px;">
+        <div class="modal-header">
+            <h3>Admin Access
+                <small>Enter Admin Password</small>
+            </h3>
+            <button class="modal-close" onclick="closeModal('admin-auth-modal')">✕</button>
+        </div>
+        <div class="modal-body">
+            <form onsubmit="verifyAdminPassword(event)">
+                <div class="field-block">
+                    <label class="field-label">Password</label>
+                    <input class="field-input" id="adm-pass-input" type="password" placeholder="Enter password " required>
+                </div>
+                <button type="submit" class="btn btn-cream" style="width:100%; margin-top:10px;">Login to Admin</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ADMIN PANEL MODAL -->
+<div class="modal-overlay" id="admin-panel-modal">
+    <div class="modal-box" style="max-width:480px;">
+        <div class="modal-header">
+            <h3>Admin Coupon Generator
+                <small>Create & Manage Redeem Codes</small>
+            </h3>
+            <button class="modal-close" onclick="closeModal('admin-panel-modal')">✕</button>
+        </div>
+        <div class="modal-body">
+            <form onsubmit="handleAdminCreateCode(event)">
+                <div class="field-block">
+                    <label class="field-label">Coupon Name</label>
+                    <input class="field-input" id="adm-code-name" type="text" placeholder="e.g. bonus5" required>
+                </div>
+                <div class="field-block">
+                    <label class="field-label">Credit Value</label>
+                    <input class="field-input" id="adm-code-val" type="number" value="1" required>
+                </div>
+                <button type="submit" class="btn btn-cream" style="width:100%; margin-bottom:16px;">Generate Code</button>
+            </form>
+            <h4 style="font-size:13px; color:var(--lux-text-dim); margin-bottom:8px; font-family:'JetBrains Mono';">Active Codes:</h4>
+            <div id="admin-codes-list" style="display:flex; flex-direction:column; gap:8px; max-height:180px; overflow-y:auto;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- SQUAD DETAILS MODAL -->
+<div class="modal-overlay" id="details-modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 id="details-modal-title">
+                Squad Details
+                <small id="details-modal-sub">Loading…</small>
+            </h3>
+            <button class="modal-close" onclick="closeModal('details-modal')">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-clan-glory" id="details-glory"></div>
+            <div id="details-bot-list" class="bot-list"></div>
+        </div>
+    </div>
+</div>
+
+<!-- NEW SQUAD MODAL (Launch New Group - Reference Matched) -->
+<div class="modal-overlay" id="squad-modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Launch New Group
+                <small>Cost: 1 Basic credit • $1.00</small>
+            </h3>
+            <button class="modal-close" onclick="closeModal('squad-modal')">✕</button>
+        </div>
+        <div class="modal-body">
+            <div style="background:rgba(212,175,55,.05); border:1px solid var(--lux-border-gold); border-radius:12px; padding:12px 14px; margin-bottom:18px; font-size:11px; color:var(--lux-text-dim); line-height:1.5;">
+                ⚠️ Some regions are under maintenance. <a href="https://wa.me/918123561579" target="_blank" style="color:var(--lux-gold);">Enable notifications</a> to get alerted when they're back.
+            </div>
+            <form onsubmit="submitSquad(event)">
+                <div class="field-block">
+                    <label class="field-label">Accounts Region</label>
+                    <select class="field-select" id="sq-region">
+                        <option value="IND" selected>🇮🇳 India</option>
+                        <option value="BD">🇧🇩 Bangladesh</option>
+                        <option value="ID">🇮🇩 Indonesia</option>
+                        <option value="ME">🌐 Middle East</option>
+                        <option value="PK">🇵🇰 Pakistan</option>
+                        <option value="VN">🇻🇳 Vietnam</option>
+                    </select>
+                </div>
+                <div class="field-block">
+                    <label class="field-label">Clan ID</label>
+                    <input class="field-input" id="sq-clan" type="text" placeholder="e.g. 123456789" value="3105458988" required>
+                </div>
+                <div class="field-block">
+                    <label class="field-label">Bot Count</label>
+                    <select class="field-select" id="sq-count">
+                        <option value="4" selected>4 bots (Full Squad)</option>
+                        <option value="3">3 bots</option>
+                        <option value="2">2 bots</option>
+                        <option value="1">1 bot</option>
+                    </select>
+                </div>
+                <div id="credit-warning-box" style="margin-top:20px;">
+                    <button type="submit" class="btn btn-cream" id="sq-submit-btn" style="width:100%;">Create & Start</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   STATE & STORAGE
+   ═══════════════════════════════════════════════════════════════ */
+const GLORY_KEY = "shadow_gamerz_baselines_v2";
+const CREDITS_KEY = "eshu_codex_credits";
+const CODES_KEY = "eshu_codex_redeem_codes";
+
+const S = {
+    stats: { accounts: [], logs: [] },
+    teams: [],
+    clans: [],
+    gloryBase: {},
+    filter: "all",
+    errorCount: 0,
+    lastClanFetch: 0,
+    credits: 0,
+    redeemCodes: { "eshu": 1 }
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════════ */
+(function init() {
+    loadLocalStorageData();
+    loadGloryBase();
+    fetchStats();
+    fetchTeamsAndClans(true);
+    setInterval(fetchStats, 3000);
+    setInterval(() => fetchTeamsAndClans(false), 15000);
+    startUptimeTicker();
+    updateCreditDisplay();
+    renderAdminCodesList();
+})();
+
+function loadLocalStorageData() {
+    try {
+        const c = localStorage.getItem(CREDITS_KEY);
+        if(c !== null) S.credits = parseInt(c, 10) || 0;
+        else {
+            S.credits = 0;
+            localStorage.setItem(CREDITS_KEY, "0");
+        }
+        const codes = localStorage.getItem(CODES_KEY);
+        if(codes) S.redeemCodes = JSON.parse(codes);
+        else {
+            S.redeemCodes = { "eshu": 1 };
+            localStorage.setItem(CODES_KEY, JSON.stringify(S.redeemCodes));
+        }
+    } catch(e) {}
+}
+
+function saveCredits() {
+    try { localStorage.setItem(CREDITS_KEY, String(S.credits)); } catch(e){}
+    updateCreditDisplay();
+}
+
+function saveRedeemCodes() {
+    try { localStorage.setItem(CODES_KEY, JSON.stringify(S.redeemCodes)); } catch(e){}
+    renderAdminCodesList();
+}
+
+function updateCreditDisplay() {
+    const el = document.getElementById("user-credits");
+    if(el) el.textContent = S.credits;
+    const acct = document.getElementById("account-credits-display");
+    if(acct) acct.textContent = S.credits;
+    
+    const warnBox = document.getElementById("credit-warning-box");
+    if(warnBox) {
+        if(S.credits < 1) {
+            warnBox.innerHTML = `<div style="background:rgba(248,113,113,.08); border:1px solid rgba(248,113,113,.3); border-radius:11px; padding:12px; text-align:center; color:var(--lux-red); font-size:12px; font-family:'JetBrains Mono';">Insufficient Basic Credits (Need 1, Have ${S.credits})</div>`;
+        } else {
+            warnBox.innerHTML = `<button type="submit" class="btn btn-cream" id="sq-submit-btn" style="width:100%;">Create & Start</button>`;
+        }
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TAB SWITCHING (Bottom Nav)
+   ═══════════════════════════════════════════════════════════════ */
+function switchTab(tabName) {
+    ['home', 'transactions', 'coupons', 'history', 'account'].forEach(t => {
+        document.getElementById(`view-${t}`).classList.remove('active-view');
+        document.getElementById(`tab-${t}`).classList.remove('active');
+    });
+    document.getElementById(`view-${tabName}`).classList.add('active-view');
+    document.getElementById(`tab-${tabName}`).classList.add('active');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ADMIN & COUPON VERIFICATION
+   ═══════════════════════════════════════════════════════════════ */
+function openAdminAuthModal() {
+    openModal("admin-auth-modal");
+}
+
+function verifyAdminPassword(e) {
+    e.preventDefault();
+    const pass = document.getElementById("adm-pass-input").value;
+    if(pass === "ESHU16") {
+        closeModal("admin-auth-modal");
+        document.getElementById("adm-pass-input").value = "";
+        openModal("admin-panel-modal");
+        toast("Admin authenticated successfully", "success");
+    } else {
+        toast("Incorrect admin password", "error");
+    }
+}
+
+function submitRedeemCode(e) {
+    e.preventDefault();
+    const code = document.getElementById("redeem-input-code").value.trim().toLowerCase();
+    if(S.redeemCodes[code] !== undefined) {
+        const val = S.redeemCodes[code];
+        S.credits += val;
+        delete S.redeemCodes[code];
+        saveRedeemCodes();
+        saveCredits();
+        document.getElementById("redeem-input-code").value = "";
+        toast(`Successfully claimed! +${val} credit(s) added.`, "success");
+        switchTab('home');
+    } else {
+        toast("Invalid or already used coupon code", "error");
+    }
+}
+
+function handleAdminCreateCode(e) {
+    e.preventDefault();
+    const name = document.getElementById("adm-code-name").value.trim().toLowerCase();
+    const val = parseInt(document.getElementById("adm-code-val").value, 10) || 1;
+    if(!name) return;
+    S.redeemCodes[name] = val;
+    saveRedeemCodes();
+    document.getElementById("adm-code-name").value = "";
+    toast(`Coupon '${name}' created with value ${val}`, "success");
+}
+
+function renderAdminCodesList() {
+    const listEl = document.getElementById("admin-codes-list");
+    if(!listEl) return;
+    const entries = Object.entries(S.redeemCodes);
+    if(!entries.length) {
+        listEl.innerHTML = `<div style="color:var(--lux-text-mute);font-size:12px;">No active codes</div>`;
+        return;
+    }
+    listEl.innerHTML = entries.map(([code, val]) => `
+        <div style="background:var(--lux-obsidian);border:1px solid var(--lux-border);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+                <strong style="color:var(--lux-gold-bright);font-family:'JetBrains Mono';">${esc(code)}</strong>
+                <span style="font-size:11px;color:var(--lux-text-mute);margin-left:8px;">Value: ${val}</span>
+            </div>
+            <button class="btn btn-danger-soft btn-sm" onclick="deleteCode('${escA(code)}')">Delete</button>
+        </div>
+    `).join("");
+}
+
+function deleteCode(code) {
+    delete S.redeemCodes[code];
+    saveRedeemCodes();
+    toast(`Deleted code ${code}`, "info");
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UPTIME TICKER
+   ═══════════════════════════════════════════════════════════════ */
+const clientStart = Date.now();
+function startUptimeTicker() {
+    setInterval(() => {
+        const s = Math.floor((Date.now() - clientStart) / 1000);
+        const h = String(Math.floor(s / 3600)).padStart(2,"0");
+        const m = String(Math.floor((s % 3600) / 60)).padStart(2,"0");
+        const sec = String(s % 60).padStart(2,"0");
+        setText("uptime-ticker", `${h}:${m}:${sec}`);
+    }, 1000);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLORY BASELINE
+   ═══════════════════════════════════════════════════════════════ */
+function loadGloryBase() {
+    try { S.gloryBase = JSON.parse(localStorage.getItem(GLORY_KEY) || "{}"); }
+    catch(e) { S.gloryBase = {}; }
+}
+function saveGloryBase() {
+    try { localStorage.setItem(GLORY_KEY, JSON.stringify(S.gloryBase)); } catch(e){}
+}
+function setBaseline(clanId, totalGlory, weeklyGlory) {
+    S.gloryBase[String(clanId)] = { total: +totalGlory||0, weekly: +weeklyGlory||0, ts: Date.now() };
+    saveGloryBase();
+}
+function resetBaseline(clanId) {
+    if(!confirm(`Reset glory baseline for clan ${clanId}?`)) return;
+    delete S.gloryBase[String(clanId)];
+    saveGloryBase();
+    toast("Baseline reset", "info");
+    renderSquads();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   API & STATS
+   ═══════════════════════════════════════════════════════════════ */
+async function apiGet(path) {
+    const res = await fetch(path, { cache: "no-store" });
+    if(!res.ok) throw new Error("HTTP " + res.status);
+    return res.json();
+}
+async function apiPost(path, body) {
+    try {
+        const res = await fetch(path, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: body !== undefined ? JSON.stringify(body) : undefined
+        });
+        return res.json();
+    } catch(e) { return { status: "error", error: e.message }; }
+}
+
+async function fetchStats() {
+    try {
+        const d = await apiGet("/api/stats");
+        S.stats = d;
+        S.errorCount = 0;
+        updateStatsRow(d);
+    } catch(e) {}
+}
+
+function updateStatsRow(d) {
+    const accs = Array.isArray(d.accounts) ? d.accounts : [];
+    const online = accs.filter(a => a.status === "ONLINE" || a.status === "IN_MATCH").length;
+    setText("st-squads", S.teams.length);
+    setText("st-bots", online + " bots running");
+    setText("st-started", d.total_matches_started || 0);
+    const uptimeH = Math.max(0.016, (d.uptime || 60) / 3600);
+    setText("st-per-hour", Math.round((d.total_matches_started||0) / uptimeH) + " / hour");
+    setText("st-done", d.total_matches || 0);
+    setText("st-active", (d.total_active_matches || 0) + " active now");
+    setText("st-exp", "+" + Number(d.total_gained_exp||0).toLocaleString());
+    setText("st-exp-hr", Number(d.exp_per_hour||0).toLocaleString() + " EXP / hr");
+}
+
+async function fetchTeamsAndClans(force) {
+    try {
+        const td = await apiGet("/api/teams");
+        if(td?.ok && Array.isArray(td.teams)) S.teams = td.teams;
+    } catch(e) {}
+
+    const now = Date.now();
+    if(force || now - S.lastClanFetch > 25000) {
+        try {
+            const cd = await apiGet("/api/clan/info" + (force ? "?force=1" : ""));
+            if(cd?.ok) {
+                S.clans = cd.clans || (cd.clan_id ? [cd] : []);
+                S.lastClanFetch = now;
+            }
+        } catch(e) {}
+    }
+
+    for(const c of S.clans) {
+        const id = String(c.clan_id);
+        if(!S.gloryBase[id]) setBaseline(id, c.total_glory, c.weekly_glory);
+    }
+
+    renderSquads();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RENDER SQUADS
+   ═══════════════════════════════════════════════════════════════ */
+function renderSquads() {
+    const grid = document.getElementById("squads-grid");
+    if(!grid) return;
+
+    setText("badge-count", S.teams.length);
+    setText("st-squads", S.teams.length);
+
+    if(!S.teams.length) {
+        grid.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <p>No squads running</p>
+                <button class="btn btn-ghost btn-sm" onclick="openSquadModal()">Launch New Group</button>
+            </div>`;
+        return;
+    }
+
+    const allAccs = Array.isArray(S.stats.accounts) ? S.stats.accounts : [];
+    grid.innerHTML = "";
+
+    for(const team of S.teams) {
+        const clan = S.clans.find(c => String(c.clan_id) === String(team.clan_id)) || null;
+        const accs = allAccs.filter(a => (team.uids||[]).includes(String(a.auth_uid||"")));
+        const card = buildCard(team, clan, accs);
+        grid.appendChild(card);
+    }
+
+    filterSquads();
+}
+
+function buildCard(team, clan, accs) {
+    const el = document.createElement("div");
+    el.className = "squad-card";
+
+    const clanId = String(team.clan_id);
+    const clanName = clan?.clan_name || `Clan ${clanId}`;
+    const clanLvl  = clan?.level || 0;
+    const region   = clan?.region || team.region || "?";
+    const members  = clan?.member_count || 0;
+    const cap      = clan?.capacity || "?";
+    const totalG   = +(clan?.total_glory  || 0);
+    const weeklyG  = +(clan?.weekly_glory || 0);
+
+    el.dataset.clan    = clanId;
+    el.dataset.clanName = clanName.toLowerCase();
+    el.dataset.region  = region;
+
+    const b = S.gloryBase[clanId];
+    const gainTotal  = b ? totalG  - b.total  : 0;
+    const gainWeekly = b ? weeklyG - b.weekly : 0;
+    const since = b ? agoStr(b.ts) : "now";
+
+    const matches  = accs.reduce((s,a)=> s + (+a.matches||0), 0);
+    const exp      = accs.reduce((s,a)=> s + (+a.gained_exp||0), 0);
+    const active   = accs.reduce((s,a)=> s + (+a.active_matches||0), 0);
+    const botCount = accs.length;
+    const paused   = botCount > 0 && accs.every(a => a.is_paused || a.status === "PAUSED");
+
+    let statusCls, statusLabel;
+    if(paused)         { statusCls = "paused";   statusLabel = "Paused";   }
+    else if(active>0)  { statusCls = "in-match";  statusLabel = "In Match"; }
+    else if(botCount>0){ statusCls = "ready";    statusLabel = "Ready";    }
+    else               { statusCls = "no-bots";  statusLabel = "No Bots";  }
+
+    el.dataset.status = statusCls;
+
+    const gc = v => v > 0 ? "pos" : (v < 0 ? "neg" : "zero");
+    const gt = v => v > 0 ? `+${v.toLocaleString()}` : (v < 0 ? v.toLocaleString() : "0");
+    const lastMatch = accs.length && accs[0].last_match_time ? accs[0].last_match_time : "—";
+
+    el.innerHTML = `
+        <div class="squad-card-head">
+            <div class="squad-card-info">
+                <div class="squad-clan-name">
+                    ${esc(clanName)}
+                    ${clanLvl ? `<span class="clan-level-badge">LV ${clanLvl}</span>` : ""}
+                </div>
+                <div class="squad-meta-row">
+                    <span class="squad-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        ${esc(region)}
+                    </span>
+                    <span class="squad-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        ${members}/${cap}
+                    </span>
+                    <span class="squad-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        ${esc(clanId)}
+                    </span>
+                </div>
+            </div>
+            <div class="squad-status">
+                <span class="spill ${statusCls}">
+                    <span class="spill-dot"></span>
+                    ${statusLabel}
+                </span>
+            </div>
+        </div>
+
+        <div class="glory-block">
+            <div class="glory-cell">
+                <div class="glory-cell-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+                    Total Glory
+                </div>
+                <div class="glory-cell-value">${totalG.toLocaleString()}</div>
+                <div class="glory-gain ${gc(gainTotal)}">${gt(gainTotal)}</div>
+                <div class="glory-since">since ${since}</div>
+            </div>
+            <div class="glory-cell">
+                <div class="glory-cell-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    Weekly Glory
+                </div>
+                <div class="glory-cell-value">${weeklyG.toLocaleString()}</div>
+                <div class="glory-gain ${gc(gainWeekly)}">${gt(gainWeekly)}</div>
+                <div class="glory-since">since ${since}</div>
+            </div>
+        </div>
+
+        <div class="card-stats">
+            <div class="card-stat-cell">
+                <div class="card-stat-val">${botCount}</div>
+                <div class="card-stat-lbl">Bots</div>
+            </div>
+            <div class="card-stat-cell">
+                <div class="card-stat-val">${matches.toLocaleString()}</div>
+                <div class="card-stat-lbl">Matches</div>
+            </div>
+            <div class="card-stat-cell">
+                <div class="card-stat-val">+${exp.toLocaleString()}</div>
+                <div class="card-stat-lbl">EXP</div>
+            </div>
+            <div class="card-stat-cell">
+                <div class="card-stat-val">${active}</div>
+                <div class="card-stat-lbl">Active</div>
+            </div>
+        </div>
+
+        <div class="card-foot">
+            <div class="card-foot-meta">
+                <span class="card-foot-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Group ${esc(team.group_id || "—")}
+                </span>
+                <span class="card-foot-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    ${esc(lastMatch)}
+                </span>
+            </div>
+            <div style="display:flex;gap:6px;">
+                <button class="btn btn-ghost btn-sm" onclick="refreshClan('${escA(clanId)}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="resetBaseline('${escA(clanId)}')" title="Reset glory baseline">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v6h6"/><path d="M3 13a9 9 0 1 0 3-7.7L3 8"/></svg>
+                </button>
+                <button class="btn btn-cream btn-sm" onclick="openDetails('${escA(clanId)}')">
+                    Details
+                </button>
+            </div>
+        </div>
+    `;
+
+    return el;
+}
+
+function setFilter(f, btn) {
+    S.filter = f;
+    document.querySelectorAll(".ftab").forEach(x => x.classList.remove("active"));
+    if(btn) btn.classList.add("active");
+    filterSquads();
+}
+
+function filterSquads() {
+    const q = (document.getElementById("squad-search")?.value || "").toLowerCase().trim();
+    document.querySelectorAll(".squad-card").forEach(card => {
+        const matchQ = !q || card.dataset.clanName?.includes(q) || card.dataset.clan?.includes(q);
+        let matchF = true;
+        if(S.filter === "in_match") matchF = card.dataset.status === "in-match";
+        else if(S.filter === "ready") matchF = card.dataset.status === "ready";
+        else if(S.filter === "paused") matchF = card.dataset.status === "paused";
+        card.style.display = (matchQ && matchF) ? "" : "none";
+    });
+}
+
+function openDetails(clanId) {
+    const clan = S.clans.find(c => String(c.clan_id) === clanId);
+    const team = S.teams.find(t => String(t.clan_id) === clanId);
+    const allAccs = Array.isArray(S.stats.accounts) ? S.stats.accounts : [];
+    const accs = allAccs.filter(a => (team?.uids||[]).includes(String(a.auth_uid||"")));
+
+    const clanName = clan?.clan_name || `Clan ${clanId}`;
+    const totalG   = +(clan?.total_glory  || 0);
+    const weeklyG  = +(clan?.weekly_glory || 0);
+    const b = S.gloryBase[clanId];
+    const gainTotal  = b ? totalG  - b.total  : 0;
+    const gainWeekly = b ? weeklyG - b.weekly : 0;
+    const gc = v => v > 0 ? "pos" : "zero";
+    const gt = v => v > 0 ? `+${v.toLocaleString()}` : "0";
+
+    setText("details-modal-title", clanName);
+    document.getElementById("details-modal-sub").textContent = `Clan ${clanId} · ${clan?.region || team?.region || "?"}`;
+
+    document.getElementById("details-glory").innerHTML = `
+        <div class="mgc-cell">
+            <div class="mgc-label">Total Glory</div>
+            <div class="mgc-value">${totalG.toLocaleString()}</div>
+            <div class="mgc-gain ${gc(gainTotal)}">${gt(gainTotal)} gained</div>
+        </div>
+        <div class="mgc-cell">
+            <div class="mgc-label">Weekly Glory</div>
+            <div class="mgc-value">${weeklyG.toLocaleString()}</div>
+            <div class="mgc-gain ${gc(gainWeekly)}">${gt(gainWeekly)} gained</div>
+        </div>
+    `;
+
+    const botListEl = document.getElementById("details-bot-list");
+    let displayAccs = accs;
+    if(!displayAccs.length && team?.uids?.length) {
+        displayAccs = team.uids.map((uid, i) => ({
+            auth_uid: uid, nickname: `Bot ${i+1}`, level: "—",
+            glory: 0, clan_glory: 0, matches: 0, gained_exp: 0,
+            status: "ONLINE", active_matches: 0
+        }));
+    }
+
+    if(!displayAccs.length) {
+        botListEl.innerHTML = `<div style="text-align:center;padding:32px;color:var(--lux-text-mute);font-size:13px;">No bot data available</div>`;
+    } else {
+        botListEl.innerHTML = displayAccs.map((a, i) => {
+            const nick   = esc(a.nickname || a.name || `Bot ${i+1}`);
+            const level  = a.level || a.player_level || "—";
+            const glory  = (+a.glory || +a.clan_glory || 0).toLocaleString();
+            const matches = (+a.matches || 0).toLocaleString();
+            const expG   = (+a.gained_exp || 0).toLocaleString();
+            const st     = (a.status || "ONLINE").toLowerCase().replace("_", "-");
+            const stCls  = st.includes("match") ? "in-match" : st.includes("pause") ? "paused" : st === "offline" ? "offline" : "online";
+            const stLabel = st.includes("match") ? "In Match" : st.includes("pause") ? "Paused" : st === "offline" ? "Offline" : "Online";
+            const initials = (a.nickname||a.name||"B").charAt(0).toUpperCase();
+
+            return `
+                <div class="bot-row">
+                    <div class="bot-avatar">${initials}</div>
+                    <div class="bot-info">
+                        <div class="bot-name">${nick}</div>
+                        <div class="bot-meta-row">
+                            <span class="bot-meta-tag">Lv ${level}</span>
+                            <span class="bot-meta-tag">${glory} glory</span>
+                            <span class="bot-meta-tag">${matches} matches</span>
+                            <span class="bot-meta-tag">+${expG} EXP</span>
+                        </div>
+                    </div>
+                    <span class="bot-status-tag ${stCls}">${stLabel}</span>
+                </div>
+            `;
+        }).join("");
+    }
+    openModal("details-modal");
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SQUAD CREATE
+   ═══════════════════════════════════════════════════════════════ */
+function openSquadModal() { openModal("squad-modal"); }
+async function submitSquad(e) {
+    e.preventDefault();
+    const count  = parseInt(document.getElementById("sq-count").value, 10);
+    
+    if(S.credits < 1) {
+        toast("Insufficient Basic Credits (Need 1, Have 0)", "error");
+        return;
+    }
+
+    const region = document.getElementById("sq-region").value;
+    const clan   = document.getElementById("sq-clan").value.trim();
+    if(!clan) { toast("Clan ID is required", "error"); return; }
+
+    S.credits -= 1;
+    saveCredits();
+
+    const btn = document.getElementById("sq-submit-btn");
+    if(btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<svg class="spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 12a9 9 0 1 1-6.22-8.56"/></svg> Starting…`;
+    }
+
+    const d = await apiPost("/api/create_team", { region, clan_id: clan, count });
+    if(btn) {
+        btn.disabled = false;
+        btn.innerHTML = `Create & Start`;
+    }
+
+    if(!d?.ok) { toast("Failed: " + (d?.error || "unknown error"), "error"); return; }
+    closeModal("squad-modal");
+    toast(`Creating ${count} bots in ${region}…`, "success");
+    setTimeout(() => { fetchStats(); fetchTeamsAndClans(true); }, 5000);
+}
+
+async function refreshClan(clanId) {
+    toast(`Refreshing clan ${clanId}…`, "info");
+    try {
+        const d = await apiGet(`/api/clan/info?force=1&clan_id=${encodeURIComponent(clanId)}`);
+        if(d?.ok) {
+            const idx = S.clans.findIndex(c => String(c.clan_id) === clanId);
+            if(idx >= 0) S.clans[idx] = d; else S.clans.push(d);
+            renderSquads();
+            toast("Clan data refreshed", "success");
+        } else toast("Refresh failed", "error");
+    } catch(e) { toast("Failed: " + e.message, "error"); }
+}
+
+async function togglePauseAll() {
+    const d = await apiPost("/api/account/pause_all");
+    if(d?.status === "ok") {
+        toast(d.all_paused ? "All bots paused" : "All bots resumed", d.all_paused ? "info" : "success");
+        setTimeout(fetchStats, 500);
+    } else toast(d?.error || "Failed", "error");
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MODAL & TOAST HELPERS
+   ═══════════════════════════════════════════════════════════════ */
+function openModal(id) {
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+function closeModal(id) {
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.classList.remove("open");
+    document.body.style.overflow = "";
+}
+
+document.addEventListener("click", e => {
+    if(e.target?.classList?.contains("modal-overlay")) {
+        e.target.classList.remove("open");
+        document.body.style.overflow = "";
+    }
+});
+
+function toast(msg, type = "info") {
+    const stack = document.getElementById("toast-stack");
+    if(!stack) return;
+    const t = document.createElement("div");
+    t.className = `toast-item ${type}`;
+    t.innerHTML = `<span>${esc(msg)}</span>`;
+    stack.appendChild(t);
+    setTimeout(() => {
+        t.style.transition = "opacity .3s, transform .3s";
+        t.style.opacity = "0";
+        setTimeout(() => t.remove(), 300);
+    }, 3200);
+}
+
+function setText(id, v) {
+    const el = document.getElementById(id);
+    if(el) el.textContent = (v ?? "");
+}
+function esc(s) {
+    return String(s ?? "")
+        .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+function escA(s) { return esc(s); }
+function agoStr(ts) {
+    if(!ts) return "now";
+    const d = Math.floor((Date.now()-ts)/1000);
+    if(d < 60)   return d + "s ago";
+    if(d < 3600) return Math.floor(d/60) + "m ago";
+    if(d < 86400)return Math.floor(d/3600) + "h ago";
+    return Math.floor(d/86400) + "d ago";
+}
+</script>
+</body>
+</html>
